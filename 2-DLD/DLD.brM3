@@ -1,0 +1,68 @@
+/* DER: */
+
+CREATE TABLE categoria (
+    id_categoria int(2) PRIMARY KEY UNIQUE,
+    nome_categoria varchar(20)
+);
+
+CREATE TABLE modelo (
+    id_modelo int(6) PRIMARY KEY,
+    nome_modelo varvhar(45)
+);
+
+CREATE TABLE proprietario (
+    cpf varchar(11) PRIMARY KEY,
+    nome varchar(45),
+    endereco varchar(45),
+    bairro varchar(45),
+    cidade varchar(45),
+    estado varchar(45),
+    telefone varchar(11),
+    Campo datetime,
+    idade int
+);
+
+CREATE TABLE veiculo (
+    placa varchar(20) PRIMARY KEY,
+    id_categoria int(2),
+    id_modelo int(6),
+    cpf_proprietario varchar(11),
+    ano date,
+    cor varchar(20),
+    chassi varchar(17)
+);
+
+CREATE TABLE local (
+    id_local int PRIMARY KEY,
+    latitude boolean,
+    longitude boolean
+);
+
+CREATE TABLE infracao (
+    id_infracao int PRIMARY KEY,
+    placa_veiculo varchar(20),
+    id_local int,
+    data_infracao date,
+    agente_transito varchar(45),
+    velocidade decimal
+);
+ 
+ALTER TABLE veiculo ADD CONSTRAINT FK_veiculo_2
+    FOREIGN KEY (id_categoria)
+    REFERENCES categoria (id_categoria);
+ 
+ALTER TABLE veiculo ADD CONSTRAINT FK_veiculo_3
+    FOREIGN KEY (id_modelo)
+    REFERENCES modelo (id_modelo);
+ 
+ALTER TABLE veiculo ADD CONSTRAINT FK_veiculo_4
+    FOREIGN KEY (cpf_proprietario)
+    REFERENCES proprietario (cpf);
+ 
+ALTER TABLE infracao ADD CONSTRAINT FK_infracao_1
+    FOREIGN KEY (placa_veiculo)
+    REFERENCES veiculo (placa);
+ 
+ALTER TABLE infracao ADD CONSTRAINT FK_infracao_2
+    FOREIGN KEY (id_local)
+    REFERENCES local (id_local);
